@@ -48,6 +48,33 @@ namespace MediaPlayerSDM4
         {
             player.URL = paths[track_list.SelectedIndex];
             player.Ctlcontrols.play();
+            lbl_msg.Text = "Playing...";
+        }
+
+        private void btn_play_Click(object sender, EventArgs e)
+        {
+            player.Ctlcontrols.play();
+            lbl_msg.Text = "Playing...";
+        }
+
+        private void btn_pause_Click(object sender, EventArgs e)
+        {
+            player.Ctlcontrols.pause();
+            lbl_msg.Text = "Playback paused...";
+        }
+
+        private void btn_stop_Click(object sender, EventArgs e)
+        {
+            player.Ctlcontrols.stop();
+            lbl_msg.Text = "";
+        }
+
+        private void btn_next_Click(object sender, EventArgs e)
+        {
+            if (track_list.SelectedIndex < track_list.Items.Count - 1)
+            {
+                track_list.SelectedIndex = track_list.SelectedIndex + 1;
+            }
         }
 
         private void btn_open_Click(object sender, EventArgs e)
