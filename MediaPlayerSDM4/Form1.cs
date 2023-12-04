@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 
 namespace MediaPlayerSDM4
@@ -16,6 +11,14 @@ namespace MediaPlayerSDM4
         {
             InitializeComponent();
         }
+
+        public IList<string> GetKeys()
+        {
+            return new List<string>(this.tracknames.Keys);
+        }
+
+        OpenFileDialog ofd = new OpenFileDialog();
+        Dictionary<string, string> tracknames = new Dictionary<string, string>();
 
         private void axWindowsMediaPlayer1_Enter_1(object sender, EventArgs e)
         {
@@ -42,11 +45,9 @@ namespace MediaPlayerSDM4
 
         }
 
-        string[] paths, files;
-
         private void track_list_SelectedIndexChanged(object sender, EventArgs e)
         {
-            player.URL = paths[track_list.SelectedIndex];
+            player.URL =tracknames[@track_list.Text];
             player.Ctlcontrols.play();
             lbl_msg.Text = "Playing...";
             timer1.Start();
@@ -55,8 +56,10 @@ namespace MediaPlayerSDM4
 
         private void btn_play_Click(object sender, EventArgs e)
         {
+            player.URL =tracknames[@track_list.Text];
             player.Ctlcontrols.play();
             lbl_msg.Text = "Playing...";
+            timer1.Start();
         }
 
         private void btn_pause_Click(object sender, EventArgs e)
@@ -69,6 +72,7 @@ namespace MediaPlayerSDM4
         {
             player.Ctlcontrols.stop();
             lbl_msg.Text = "";
+            lbl_track_start.Text = "00:00";
         }
 
         private void btn_next_Click(object sender, EventArgs e)
@@ -93,24 +97,37 @@ namespace MediaPlayerSDM4
             {
                 progressBar1.Maximum = (int)player.Ctlcontrols.currentItem.duration;
                 progressBar1.Value = (int)player.Ctlcontrols.currentPosition;
+                lbl_track_start.Text = player.Ctlcontrols.currentPositionString;
+                lbl_track_end.Text = player.Ctlcontrols.currentItem.durationString.ToString();
             }
-            lbl_track_start.Text = player.Ctlcontrols.currentPositionString;
-            lbl_track_end.Text = player.Ctlcontrols.currentItem.durationString.ToString();
+            
         }
 
+        private void lbl_track_start_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
         private void btn_open_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true;
-            if(ofd.ShowDialog()==System.Windows.Forms.DialogResult.OK)
+            if (ofd.ShowDialog()==DialogResult.Cancel)
+                return;
+            foreach(string s in ofd.FileNames)
             {
-                files = ofd.SafeFileNames;
-                paths = ofd.FileNames;
-                for(int x=0;x<files.Length;x++)
-                {
-                    track_list.Items.Add(files[x]);
-                }
+                tracknames.Add(Path.GetFileName(s), Path.GetFullPath(s));
             }
+            track_list.DataSource = GetKeys();
+            track_list.Refresh();
         }
     }
 }
