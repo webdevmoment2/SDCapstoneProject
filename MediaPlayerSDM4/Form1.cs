@@ -44,6 +44,12 @@ namespace MediaPlayerSDM4
 
         string[] paths, files;
 
+        private void track_list_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            player.URL = paths[track_list.SelectedIndex];
+            player.Ctlcontrols.play();
+        }
+
         private void btn_open_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();

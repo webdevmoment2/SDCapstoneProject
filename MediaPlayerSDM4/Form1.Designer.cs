@@ -41,10 +41,10 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.lbl_track_start = new System.Windows.Forms.Label();
             this.lbl_track_end = new System.Windows.Forms.Label();
-            this.musicPlayer = new AxWMPLib.AxWindowsMediaPlayer();
+            this.player = new AxWMPLib.AxWindowsMediaPlayer();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.musicPlayer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -77,6 +77,7 @@
             this.track_list.Name = "track_list";
             this.track_list.Size = new System.Drawing.Size(667, 109);
             this.track_list.TabIndex = 5;
+            this.track_list.SelectedIndexChanged += new System.EventHandler(this.track_list_SelectedIndexChanged);
             // 
             // btn_open
             // 
@@ -190,16 +191,16 @@
             this.lbl_track_end.TabIndex = 5;
             this.lbl_track_end.Text = "00:00";
             // 
-            // musicPlayer
+            // player
             // 
-            this.musicPlayer.Enabled = true;
-            this.musicPlayer.Location = new System.Drawing.Point(15, 21);
-            this.musicPlayer.Name = "musicPlayer";
-            this.musicPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("musicPlayer.OcxState")));
-            this.musicPlayer.Size = new System.Drawing.Size(782, 322);
-            this.musicPlayer.TabIndex = 0;
-            this.musicPlayer.Visible = false;
-            this.musicPlayer.Enter += new System.EventHandler(this.axWindowsMediaPlayer1_Enter_1);
+            this.player.Enabled = true;
+            this.player.Location = new System.Drawing.Point(15, 21);
+            this.player.Name = "player";
+            this.player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("player.OcxState")));
+            this.player.Size = new System.Drawing.Size(782, 322);
+            this.player.TabIndex = 0;
+            this.player.Visible = false;
+            this.player.Enter += new System.EventHandler(this.axWindowsMediaPlayer1_Enter_1);
             // 
             // Form1
             // 
@@ -212,20 +213,20 @@
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.lbl_msg);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.musicPlayer);
+            this.Controls.Add(this.player);
             this.Name = "Form1";
             this.Text = "Form1";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.musicPlayer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private AxWMPLib.AxWindowsMediaPlayer musicPlayer;
+        private AxWMPLib.AxWindowsMediaPlayer player;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btn_stop;
         private System.Windows.Forms.Button btn_next;
