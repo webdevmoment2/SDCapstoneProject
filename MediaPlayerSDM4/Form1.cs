@@ -29,7 +29,7 @@ namespace MediaPlayerSDM4
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-
+            player.settings.volume = trackBar1.Value;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -49,6 +49,8 @@ namespace MediaPlayerSDM4
             player.URL = paths[track_list.SelectedIndex];
             player.Ctlcontrols.play();
             lbl_msg.Text = "Playing...";
+            timer1.Start();
+            trackBar1.Value = 50;
         }
 
         private void btn_play_Click(object sender, EventArgs e)
@@ -75,6 +77,25 @@ namespace MediaPlayerSDM4
             {
                 track_list.SelectedIndex = track_list.SelectedIndex + 1;
             }
+        }
+
+        private void btn_prev_Click(object sender, EventArgs e)
+        {
+            if (track_list.SelectedIndex > 0)
+            {
+                track_list.SelectedIndex = track_list.SelectedIndex - 1;
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (player.playState == WMPLib.WMPPlayState.wmppsPlaying)
+            {
+                progressBar1.Maximum = (int)player.Ctlcontrols.currentItem.duration;
+                progressBar1.Value = (int)player.Ctlcontrols.currentPosition;
+            }
+            lbl_track_start.Text = player.Ctlcontrols.currentPositionString;
+            lbl_track_end.Text = player.Ctlcontrols.currentItem.durationString.ToString();
         }
 
         private void btn_open_Click(object sender, EventArgs e)
